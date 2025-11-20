@@ -1,13 +1,10 @@
-#include "/home/codeleaded/System/Static/Library/QueryLanguage.h"
-
-#define TOKEN_CUSTOM_SELECT      TOKEN_START+0
-#define TOKEN_CUSTOM_FROM        TOKEN_START+1
+#include "/home/codeleaded/System/Static/Container/Database.h"
 
 void Print_Func(void* ptr,DB_Info* info){
-    if(info->size==1) printf("(char) %d",*(char*)ptr);
-    if(info->size==2) printf("(short) %d",*(short*)ptr);
-    if(info->size==4) printf("(int) %d",*(int*)ptr);
-    if(info->size==8) printf("(long) %ld",*(long*)ptr);
+    if(info->size==1) printf("(char) %d\t",*(char*)ptr);
+    if(info->size==2) printf("(short) %d\t",*(short*)ptr);
+    if(info->size==4) printf("(int) %d\t",*(int*)ptr);
+    if(info->size==8) printf("(long) %ld\t",*(long*)ptr);
 }
 DB_Bool Test_Func(Vector* vec){
     for(int i = 0;i<vec->size;i++){
@@ -17,24 +14,54 @@ DB_Bool Test_Func(Vector* vec){
     return DB_FALSE;
 }
 
-int main(int argc,char** argv){
+int main(){
 
-    if(argc==1){
-        printf("Expected a Script!\n");
-        exit(1);
-    }
+    Database db = Database_Make(3,
+        (DB_Type[]){ 
+            DB_Type_New(2,"short",NULL),
+            DB_Type_New(4,"int",NULL),
+            DB_Type_New(8,"long",NULL)
+        },
+        (char*[]){ "Hello","World","Wtf" }
+    );
 
-    QueryLanguage ql = QueryLanguage_New();
+    //Database_Print(&db);
 
-    //QueryLanguage_Load(&ql,"./Database1.alxdb","Database1");
+    Database_Entry_Push(&db,(void*[]){ 
+        (short[]){ 1 }, 
+        (int[]){ 2 }, 
+        (long[]){ 3 }, 
+    });
+    Database_Entry_Push(&db,(void*[]){ 
+        (short[]){ 4 }, 
+        (int[]){ 5 }, 
+        (long[]){ 6 }, 
+    });
+    Database_Entry_Push(&db,(void*[]){ 
+        (short[]){ 4 }, 
+        (int[]){ 8 }, 
+        (long[]){ 9 }, 
+    });
+    Database_Entry_Push(&db,(void*[]){ 
+        (short[]){ 10 }, 
+        (int[]){ 11 }, 
+        (long[]){ 12 }, 
+    });
+    Database_Entry_Push(&db,(void*[]){ 
+        (short[]){ 13 }, 
+        (int[]){ 14 }, 
+        (long[]){ 15 }, 
+    });
 
-    //QueryLanguage_InterpretLine(&ql,"CREATE db2;");
-    //QueryLanguage_Print(&ql);
-    //QueryLanguage_InterpretLine(&ql," -- Hello World\nLOAD db1; /* WOw \n ok */ LOAD db2;");
+    Database_Entry_Update(&db,1,"World",(int[]){ 69 });
+    Database_Entry_Remove(&db,Test_Func);
 
-    QueryLanguage_InterpretScript(&ql,argv[1]);
+    Database_Print(&db,Print_Func);
+    Database_Write(&db,"./data/db1.alxdb");
+    Database_Free(&db);
 
-    QueryLanguage_Free(&ql);
-
+    Database_Read(&db,"./data/db1.alxdb");
+    Database_Print(&db,Print_Func);
+    Database_Free(&db);
     return 0;
 }
