@@ -54,8 +54,12 @@ FROM db1;
 
 LOAD db1,db2;
 PRINT db1,db2;
-DELETE db1,db2;
 
+PRINT *
+WHERE Hello==13
+FROM db1;
+
+DELETE db1,db2;
 
 /*
 
