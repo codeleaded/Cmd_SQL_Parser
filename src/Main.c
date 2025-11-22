@@ -9,8 +9,8 @@ int main(int argc,char** argv){
     CStr path = Files_cwd();
     CStr target = CStr_Concat(path,"/data");
     CStr_Free(&path);
-
-    printf("Target: %s\n",target);
+    //printf("Target: %s\n",target);
+    
     QueryLanguage ql = QueryLanguage_New(target);
     CStr_Free(&target);
 
