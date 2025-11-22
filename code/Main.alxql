@@ -53,10 +53,11 @@ FROM db1;
 --DELETE db1,db2;
 
 LOAD db1,db2;
-PRINT db1,db2;
+--PRINT db1,db2;
 
-PRINT *
+PRINT Hello,World1
 WHERE Hello1>=6 & World1>10
+--ORDERBY World1
 FROM db1;
 
 DELETE db1,db2;
