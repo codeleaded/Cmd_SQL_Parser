@@ -1,10 +1,11 @@
 #include "/home/codeleaded/System/Static/Container/Database.h"
 
-void Print_Func(void* ptr,DB_Info* info){
-    if(info->size==1) printf("(char) %d\t",*(char*)ptr);
-    if(info->size==2) printf("(short) %d\t",*(short*)ptr);
-    if(info->size==4) printf("(int) %d\t",*(int*)ptr);
-    if(info->size==8) printf("(long) %ld\t",*(long*)ptr);
+CStr CStr_Func(void* ptr,DB_Info* info){
+    if(info->size==1)       return (char*)Number_Get(*(char*)ptr);
+    else if(info->size==2)  return (char*)Number_Get(*(short*)ptr);
+    else if(info->size==4)  return (char*)Number_Get(*(int*)ptr);
+    else if(info->size==8)  return (char*)Number_Get(*(long long*)ptr);
+    return NULL;
 }
 DB_Bool Test_Func(Vector* vec){
     for(int i = 0;i<vec->size;i++){
@@ -56,12 +57,12 @@ int main(){
     Database_Entry_Update(&db,1,"World",(int[]){ 69 });
     Database_Entry_Remove(&db,Test_Func);
 
-    Database_Print(&db,Print_Func);
+    Database_Print(&db,CStr_Func);
     Database_Write(&db,"./data/db1.alxdb");
     Database_Free(&db);
 
     Database_Read(&db,"./data/db1.alxdb");
-    Database_Print(&db,Print_Func);
+    Database_Print(&db,CStr_Func);
     Database_Free(&db);
     return 0;
 }
