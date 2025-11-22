@@ -1,4 +1,4 @@
--- Operators: + - * /
+-- Operators: + - * / & | ! == != < > <= >=
 /*
 
 CREATE      [DB,...]
@@ -29,8 +29,6 @@ WHERE Hello==13 AND OR NOT
 FROM db1;
 
 */
-
---"/home/codeleaded/Hecke/C/Cmd_SQL_Parser/data/"
 --PATH *;
 
 --CREATE db1,db2;
