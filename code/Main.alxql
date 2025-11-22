@@ -56,7 +56,7 @@ LOAD db1,db2;
 PRINT db1,db2;
 
 PRINT *
-WHERE Hello==13
+WHERE Hello1>=6 & World1>10
 FROM db1;
 
 DELETE db1,db2;
